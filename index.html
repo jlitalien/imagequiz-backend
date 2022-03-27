@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--DO NOT CHANGE THE FOLLOWING LINES !!!-->
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://habahram.github.io/ISTA330/practicum/week-7/tests.js" type="text/javascript"></script>
+    
+    <title>Document</title>
+</head>
+
+<body>
+   <div>
+       In this practicum you will develop a <a href="https://restfulapi.net">REST API</a> using Nodejs and 
+       Express. You will deploy the REST API server on Heroku.
+
+       <ul>
+           <li>Create a new github repository, name it "imagequiz-backend". Copy the files flowers.js, data.js, 
+               custoemrs.js and scores.js to 
+               your "imagequiz-backend" repository.
+           </li>
+           <li>
+            Develop a REST API with the follwoing specification and push the code to your 
+            imagequiz-backend repository. The API should have the following methods:
+            <ol>
+                <li>'/register' - a POST method that stores the name, email and password 
+                    of the quiz taker in your custoemrs.js file. If a customer with the same email already 
+                exists you should return a response with the status code 403.
+                The method should return an object {done, message} where done is boolean and message is a string;
+            </li>
+                <li>'/login' - a POST method that determinse whether the provided credentials are valid or not.
+                    The method should return an object {done, message}.
+                </li>
+                <li>'/flowers' - a GET method returning the list of all the flowers from your flowers.js file.
+                    The method should return an object {done, result, message} where result is an arary.
+                </li>                
+                <li>'/quiz/:id' - a GET method returning the specified quiz. 
+                    The method should return an object {done, result, message} where result is an object or it is undefined.
+                </li>
+                <li>'/score' - a POST method storing the score for a quiz taken by a quiz taker.
+                    The method should return an object {done, message}.
+                </li>
+                <li>'/scores/:quiztaker/:quizid' - a GET method returning the scores of the specified quiz taker 
+                    for the specified quiz. The method should return an object {done, result, message} where result is a number or it is undefined.</li>
+                <li>All your methods in your API should return json objects. </li>
+            </ol>
+           </li>
+           <li>            
+            Deploy your REST API to Heroku (for instruction on how to do this, refer to the lecture 'Introduction to Express Framework II' on d2l). 
+            You should follow the follwoing naming convention for
+             your Heroku deployment: the name of your Heroku application should be "yourgithubusername-imagequiz-api". 
+           </li>
+          
+       </ul>
+
+       
+       
+       
+   </div>
+   <div id="test-the-api">
+    
+   </div>
+    <div class="iframe-container">
+        <iframe id="myApplicationFrame" src="" allowfullscreen></iframe>
+    </div>
+</body>
+
+</html>
