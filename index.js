@@ -24,7 +24,7 @@ app.get("/", function (req, res) {
 });
 
 app.get("/flowers", function (req, res) {
-  res.status(200).JSON.stringify({
+  res.status(200).json({
     done: true,
     result: flowers,
     message: "List of flowers returned!",
@@ -39,7 +39,7 @@ app.get("/quiz/:id", function (req, res) {
       resultArray = quizzes.quizzes[i];
     }
   }
-  res.status(200).JSON.stringify({
+  res.status(200).json({
     done: true,
     result: resultArray,
     message: "Specified quiz returned!",
@@ -56,7 +56,7 @@ app.get("/scores/:quiztaker/:quizid", function (req, res) {
       resultNum = scores.scores[i].score;
     }
   }
-  res.status(200).JSON.stringify({
+  res.status(200).json({
     done: true,
     result: resultNum,
     message: "Specified quiz scores returned!",
