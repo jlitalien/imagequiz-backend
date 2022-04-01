@@ -1,5 +1,5 @@
-const flowers = require("./flowers");
-const quizzes = require("./data");
+let { flowers } = require("./flowers");
+let { quizzes } = require("./data");
 let { customers } = require("./customers");
 let { scores } = require("./scores");
 const express = require("express");
