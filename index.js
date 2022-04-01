@@ -47,7 +47,7 @@ app.get("/quiz/:id", function (req, res) {
 });
 
 app.get("/scores/:quiztaker/:quizid", function (req, res) {
-  resultNum = 5;
+  resultNum = "";
   for (let i = 0; i < scores.scores.length; i++) {
     if (
       scores.scores[i].quizId == req.params.quizid &&
