@@ -4,10 +4,18 @@ let { customers } = require("./customers");
 let { scores } = require("./scores");
 const express = require("express");
 const e = require("express");
+const { response } = require("express");
 const app = express();
 const port = process.env.PORT || 4002;
 
 app.use(express.json());
+
+app.get("/", function (req, res) {
+  res.status(200).json({
+    done: true,
+    message: "Welcome to imagequiz backend API",
+  });
+});
 
 app.get("/flowers", function (req, res) {
   res.status(200).json({
