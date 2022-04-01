@@ -34,9 +34,9 @@ app.get("/flowers", function (req, res) {
 app.get("/quiz/:id", function (req, res) {
   quizId = req.params.id;
   resultArray = undefined;
-  for (let i = 0; i < quizzes.quizzes.length; i++) {
-    if (quizzes.quizzes[i].id == quizId) {
-      resultArray = quizzes.quizzes[i];
+  for (let i = 0; i < quizzes.length; i++) {
+    if (quizzes[i].id == quizId) {
+      resultArray = quizzes[i];
     }
   }
   res.status(200).json({
