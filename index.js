@@ -5,7 +5,7 @@ let { scores } = require("./scores");
 const express = require("express");
 const e = require("express");
 const app = express();
-const port = 4002;
+const port = process.env.PORT || 4002;
 
 app.use(express.json());
 
