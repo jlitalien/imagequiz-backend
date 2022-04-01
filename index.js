@@ -12,7 +12,7 @@ const port = process.env.PORT || 4002;
 const cors = require("cors");
 
 //middlewares
-application.use(cors());
+app.use(cors());
 
 app.use(express.json());
 
