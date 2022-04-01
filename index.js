@@ -8,6 +8,12 @@ const { response } = require("express");
 const app = express();
 const port = process.env.PORT || 4002;
 
+//dependencies
+const cors = require("cors");
+
+//middlewares
+application.use(cors());
+
 app.use(express.json());
 
 app.get("/", function (req, res) {
