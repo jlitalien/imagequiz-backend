@@ -67,8 +67,7 @@ app.post("/register", (req, res) => {
   var name = req.body.name;
   var email = req.body.email;
   var pwd = req.body.password;
-  var newID = Math.floor(Math.random(10000));
-  var newEntry = { id: newID, name: name, email: email, password: pwd };
+  var newEntry = { name: name, email: email, password: pwd };
   if (customers.length === 0) {
     customers.push(newEntry);
     res
