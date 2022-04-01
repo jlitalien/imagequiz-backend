@@ -48,12 +48,12 @@ app.get("/quiz/:id", function (req, res) {
 
 app.get("/scores/:quiztaker/:quizid", function (req, res) {
   resultNum = "";
-  for (let i = 0; i < scores.scores.length; i++) {
+  for (let i = 0; i < scores.length; i++) {
     if (
-      scores.scores[i].quizId == req.params.quizid &&
-      scores.scores[i].quizTaker == req.params.quiztaker
+      scores[i].quizId == req.params.quizid &&
+      scores[i].quizTaker == req.params.quiztaker
     ) {
-      resultNum = scores.scores[i].score;
+      resultNum = scores[i].score;
     }
   }
   res.status(200).json({
