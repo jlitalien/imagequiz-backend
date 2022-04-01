@@ -47,7 +47,7 @@ app.get("/quiz/:id", function (req, res) {
 });
 
 app.get("/scores/:quiztaker/:quizid", function (req, res) {
-  resultNum = undefined;
+  resultNum;
   for (let i = 0; i < scores.scores.length; i++) {
     if (
       scores.scores[i].quizId == req.params.quizid &&
@@ -128,7 +128,7 @@ app.post("/score", (req, res) => {
   var score = req.body.score;
   var date = new Date().toJSON().slice(0, 10).replace(/-/g, "/");
 
-  var newEntry = { quizTaker: email, quidId: id, score: score, date: date };
+  var newEntry = { quizTaker: email, quizId: id, score: score, date: date };
   if (scores.length === 0) {
     scores.push(newEntry);
     res.status(200).json({ done: true, message: "Score updated" }).end();
