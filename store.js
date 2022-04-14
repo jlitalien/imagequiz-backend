@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const { Pool } = require("pg");
 
-const connectionString = `postgres://${process.env.USERNAME}${process.env.PASSWORD}@${process.env.HOST}:${process.env.DATABASEPORT}/${process.env.DATABASE}`;
+const connectionString = `postgres://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.DATABASEPORT}/${process.env.DATABASE}`;
 
 const connection = {
   connectionString: process.env.DATABASEURL
@@ -12,8 +12,7 @@ const connection = {
 
 const pool = new Pool({
   ssl: { rejectUnauthorized: false },
-  connectionString:
-    "postgres://dpknamcxkoouds:8840a2224e7628e2e106f00c6dece9759c87708a3424fa15cac5d28fc1031dae@ec2-52-54-212-232.compute-1.amazonaws.com:5432/d4lm95hjhv8mtn",
+  connectionString: `postgres://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.DATABASEPORT}/${process.env.DATABASE}`,
 });
 
 let store = {
