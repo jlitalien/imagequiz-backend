@@ -21,7 +21,6 @@ let store = {
     return pool
       .query("select * from imagequiz.flower")
       .then((x) => {
-        console.log(x.rows);
         return x;
       })
       .catch((e) => {
@@ -38,7 +37,7 @@ let store = {
     );
   },
   login: (email, password) => {
-    pool
+    return pool
       .query(
         "select name, email, password from imagequiz.customer where email = $1",
         [email]
@@ -46,8 +45,9 @@ let store = {
       .then((x) => {
         if (x.rows.length === 1) {
           let valid = bcrypt.compareSync(password, x.rows[0].password);
+          console.log(valid);
           if (valid) {
-            return { valid: true };
+            return { valid: true, message: "Logged in." };
           } else {
             return { valid: false, message: "Credentials are not valid." };
           }
@@ -60,8 +60,46 @@ let store = {
         return { valid: false, message: "Something went wrong." };
       });
   },
-  getQuiz: (id) => {
-    pool.query("select ");
+  getQuiz: (quizId) => {
+    return pool
+      .query("select score from imagequiz.score where id = $1", [quizId])
+      .then((x) => {
+        return x;
+      })
+      .catch((e) => {
+        return { valid: false, message: "Something went wrong." };
+      });
+  },
+
+  getScores: (quizTaker, quizId) => {
+    return pool
+      .query(
+        "select score from imagequiz.score where customerid = $1 and where quiz_id = $2",
+        [quizTaker, quizId]
+      )
+      .then((x) => {
+        return x;
+      })
+      .catch((e) => {
+        return { valid: false, message: "Something went wrong." };
+      });
+  },
+
+  addScore: (quizTaker, id, score, date) => {
+    return pool
+      .query("insert into imagequiz.score values (default, $1, $2, $3, $4)", [
+        quizTaker,
+        id,
+        score,
+        date,
+      ])
+      .then((x) => {
+        return { done: true, message: "Score added successfully." };
+      })
+      .catch((e) => {
+        console.log(e);
+        return { valid: false, message: "Something went wrong." };
+      });
   },
 };
 exports.store = store;

@@ -47,19 +47,17 @@ app.get("/flowers", function (req, res) {
 });
 
 app.get("/quiz/:id", function (req, res) {
-  quizId = req.params.id;
   store
-    .getQuiz(quizId)
+    .getQuiz()
     .then((x) => {
-      if (x.id) {
-        res.status(200).json({ done: true, result: x });
-      } else {
-        res.status(404).json({ done: false, message: "Something went wrong" });
-      }
+      res.status(200).json({
+        done: true,
+        result: x.rows,
+        message: "Quiz found.",
+      });
     })
     .catch((e) => {
-      console.log(e);
-      res.status(500).json({ done: false, message: "Something went wrong" });
+      res.status(404).json({ done: false, message: "Something went wrong." });
     });
 
   /*
@@ -78,6 +76,19 @@ app.get("/quiz/:id", function (req, res) {
 });
 
 app.get("/scores/:quiztaker/:quizid", function (req, res) {
+  store
+    .getQuiz()
+    .then((x) => {
+      res.status(200).json({
+        done: true,
+        result: x.rows,
+        message: "Score(s) found.",
+      });
+    })
+    .catch((e) => {
+      res.status(404).json({ done: false, message: "Something went wrong." });
+    });
+  /*
   resultNum = "";
   for (let i = 0; i < scores.length; i++) {
     if (
@@ -92,6 +103,7 @@ app.get("/scores/:quiztaker/:quizid", function (req, res) {
     result: resultNum,
     message: "Specified quiz scores returned!",
   });
+  */
 });
 
 app.post("/register", (req, res) => {
@@ -144,8 +156,10 @@ app.post("/register", (req, res) => {
 app.post("/login", (req, res) => {
   var email = req.body.email;
   var pwd = req.body.password;
+  console.log(email);
+  console.log(pwd);
   store
-    .login(email, password)
+    .login(email, pwd)
     .then((x) => {
       if (x.valid) {
         res
@@ -186,11 +200,26 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/score", (req, res) => {
-  var email = req.body.quizTaker;
+  var quizTaker = req.body.quizTaker;
   var id = req.body.quizId;
   var score = req.body.score;
-  var date = new Date().toJSON().slice(0, 10).replace(/-/g, "/");
-
+  var date = new Date().toJSON().slice(0, 10).replace(/-/g, "-");
+  var time = new Date(0);
+  time.setSeconds(45); // specify value for SECONDS here
+  var timeString = time.toISOString().substr(11, 8);
+  store
+    .addScore(quizTaker, id, score, date + " " + timeString)
+    .then((x) => {
+      console.log(x);
+      res
+        .status(200)
+        .json({ done: true, message: "Score added successfully." });
+    })
+    .catch((e) => {
+      console.log(e);
+      res.status(500).json({ done: false, message: "Something went wrong." });
+    });
+  /*
   var newEntry = { quizTaker: email, quizId: id, score: score, date: date };
   if (scores.length === 0) {
     scores.push(newEntry);
@@ -210,6 +239,7 @@ app.post("/score", (req, res) => {
     scores.push(newEntry);
     res.status(200).json({ done: true, message: "Score updated" }).end();
   }
+  */
 });
 
 app.listen(port, () => console.log("App listening on port 4002"));
