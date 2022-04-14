@@ -25,7 +25,18 @@ app.get("/", function (req, res) {
 });
 
 app.get("/flowers", function (req, res) {
-  let result = store.getFlowers();
+  store
+    .getFlowers()
+    .then((x) => {
+      res.status(200).json({
+        done: true,
+        result: x.rows,
+        message: "Flowers found in database.",
+      });
+    })
+    .catch((e) => {
+      res.status(404).json({ done: false, message: "Something went wrong." });
+    });
   /*
   res.status(200).json({
     done: true,

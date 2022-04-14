@@ -10,17 +10,22 @@ const connection = {
   ssl: { rejectUnauthorized: false },
 };
 
-const pool = new Pool(connection);
+const pool = new Pool({
+  ssl: { rejectUnauthorized: false },
+  connectionString:
+    "postgres://dpknamcxkoouds:8840a2224e7628e2e106f00c6dece9759c87708a3424fa15cac5d28fc1031dae@ec2-52-54-212-232.compute-1.amazonaws.com:5432/d4lm95hjhv8mtn",
+});
 
 let store = {
   getFlowers: () => {
-    pool
+    return pool
       .query("select * from imagequiz.flower")
       .then((x) => {
-        console.log(x);
+        console.log(x.rows);
+        return x;
       })
       .catch((e) => {
-        console.log(e);
+        console.log("getflowers err:" + e);
         return { valid: false, message: "Something went wrong." };
       });
   },
