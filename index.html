@@ -1,70 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!--DO NOT CHANGE THE FOLLOWING LINES !!!-->
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://habahram.github.io/ISTA330/practicum/week-7/tests.js" type="text/javascript"></script>
-    
+    <link rel="stylesheet" href="styles.css" />
+    <script
+      src="https://habahram.github.io/ISTA330/practicum/week-8/tests.js"
+      type="text/javascript"
+    ></script>
+
     <title>Document</title>
-</head>
+  </head>
 
-<body>
-   <div>
-       In this practicum you will develop a <a href="https://restfulapi.net">REST API</a> using Nodejs and 
-       Express. You will deploy the REST API server on Heroku.
+  <body>
+    <div>
+      In the previous practicum, you developed a
+      <a href="https://restfulapi.net">REST API</a> using Nodejs and Express and
+      you deployed your REST API on Heroku. In this practicum, you will add a
+      <a href="https://www.postgresql.org/about/">PostgreSQL</a> database to
+      your imagequiz-backend API.
 
-       <ul>
-           <li>Create a new github repository, name it "imagequiz-backend". Copy the files flowers.js, data.js, 
-               custoemrs.js and scores.js to 
-               your "imagequiz-backend" repository.
-           </li>
-           <li>
-            Develop a REST API with the follwoing specification and push the code to your 
-            imagequiz-backend repository. The API should have the following methods:
-            <ol>
-                <li>'/register' - a POST method that stores the name, email and password 
-                    of the quiz taker in your custoemrs.js file. If a customer with the same email already 
-                exists you should return a response with the status code 403.
-                The method should return an object {done, message} where done is boolean and message is a string;
+      <ul>
+        <li>
+          To attach a PostgreSQL database to your imagequiz-backend application,
+          you need to navigate to the Resources tab in the header of your
+          napplication's dahsboard. Then type Heroku Postgres into the Add-ons
+          search field. Then select the suggested Heroku Postgres add-on from
+          the dropdown. The next popup asks you to choose a pricing plan for the
+          database. Select the Hobby Dev - Free plan and click Provision.
+        </li>
+        <li>
+          To find the credentials and the connection URL for the PostgreSQL
+          database, you need to navigate to the Resources tab in your
+          application's dashboard on heroku and select the Heroku Postgres
+          resource. This brings you to the configuration screen of the your
+          PostgreSQL database. Now select the Settings tab in the header of that
+          screen. Click the View Credentials button to see the credentials of
+          your PostgreSQL database. You can use these credentials to connect to
+          your PostgreSQL database from DBeaver client tool.
+        </li>
+        <li>
+          <a href="https://dbeaver.io/about/">DBeaver</a> is a database tool
+          using which you can connect to your database and run sql commands on
+          your database. Download and install a free community edition of
+          DBeaver using
+          <a href="https://dbeaver.io/download/">DBeaver official website</a>.
+        </li>
+        <li>
+          To be able to use relational databases, we need to use the
+          <a href="https://www.w3schools.com/sql/">SQL language</a>. Refer to
+          the lecture 'Adding a postgreSQL database to Express/Node.js API' on
+          d2l for more information about this language and how it is used to
+          manipulate/query data in a relational database.
+        </li>
+        <li>
+          Using DBeaver, connect to your postgreSQL database on heroku and
+          create the following tables with the specified columns:
+          <ol>
+            <li>
+              customer: id, name, email, password (note: never save the actual
+              password into the database. You should always encrypt the password
+              and save the hashed password.)
             </li>
-                <li>'/login' - a POST method that determinse whether the provided credentials are valid or not.
-                    The method should return an object {done, message}.
-                </li>
-                <li>'/flowers' - a GET method returning the list of all the flowers from your flowers.js file.
-                    The method should return an object {done, result, message} where result is an arary.
-                </li>                
-                <li>'/quiz/:id' - a GET method returning the specified quiz. 
-                    The method should return an object {done, result, message} where result is an object or it is undefined.
-                </li>
-                <li>'/score' - a POST method storing the score for a quiz taken by a quiz taker.
-                    The method should return an object {done, message}.
-                </li>
-                <li>'/scores/:quiztaker/:quizid' - a GET method returning the scores of the specified quiz taker 
-                    for the specified quiz. The method should return an object {done, result, message} where result is a number or it is undefined.</li>
-                <li>All your methods in your API should return json objects. </li>
-            </ol>
-           </li>
-           <li>            
-            Deploy your REST API to Heroku (for instruction on how to do this, refer to the lecture 'Introduction to Express Framework II' on d2l). 
-            You should follow the follwoing naming convention for
-             your Heroku deployment: the name of your Heroku application should be "yourgithubusername-imagequiz-api". 
-           </li>
-          
-       </ul>
-
-       
-       
-       
-   </div>
-   <div id="test-the-api">
-    
-   </div>
-    <div class="iframe-container">
-        <iframe id="myApplicationFrame" src="" allowfullscreen></iframe>
+            <li>question: id, picture, choices, answer</li>
+            <li>category: id, name</li>
+            <li>quiz: id, name, category_id</li>
+            <li>quiz_question: quiz_id, question_id</li>
+            <li>score: id, customer_id, quiz_id, date, score</li>
+            <li>flower: id, name, picture</li>
+          </ol>
+        </li>
+        <li>
+          Modify your imagequiz-backend to insert/get data to/from the
+          postgreSQL database that you added to your imagequiz-backend API.
+          Refer to the lecture series 'Adding a postgreSQL database to
+          Express/Node.js API' to learn how to complete this step.
+        </li>
+        <li>Deploy your modifed imagequiz-backend API to heroku.</li>
+      </ul>
     </div>
-</body>
-
+    <div id="test-the-api"></div>
+    <div class="iframe-container">
+      <iframe id="myApplicationFrame" src="" allowfullscreen></iframe>
+    </div>
+  </body>
 </html>
