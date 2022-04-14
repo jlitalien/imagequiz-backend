@@ -2,6 +2,7 @@ let { flowers } = require("./flowers");
 let { quizzes } = require("./data");
 let { customers } = require("./customers");
 let { scores } = require("./scores");
+let { store } = require("./store");
 const express = require("express");
 const e = require("express");
 const { response } = require("express");
@@ -24,15 +25,33 @@ app.get("/", function (req, res) {
 });
 
 app.get("/flowers", function (req, res) {
+  let result = store.getFlowers();
+  /*
   res.status(200).json({
     done: true,
     result: flowers,
     message: "List of flowers returned!",
   });
+  */
 });
 
 app.get("/quiz/:id", function (req, res) {
   quizId = req.params.id;
+  store
+    .getQuiz(quizId)
+    .then((x) => {
+      if (x.id) {
+        res.status(200).json({ done: true, result: x });
+      } else {
+        res.status(404).json({ done: false, message: "Something went wrong" });
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+      res.status(500).json({ done: false, message: "Something went wrong" });
+    });
+
+  /*
   resultArray = undefined;
   for (let i = 0; i < quizzes.length; i++) {
     if (quizzes[i].id == quizId) {
@@ -44,6 +63,7 @@ app.get("/quiz/:id", function (req, res) {
     result: resultArray,
     message: "Specified quiz returned!",
   });
+  */
 });
 
 app.get("/scores/:quiztaker/:quizid", function (req, res) {
@@ -68,6 +88,21 @@ app.post("/register", (req, res) => {
   var email = req.body.email;
   var pwd = req.body.password;
   var newEntry = { name: name, email: email, password: pwd };
+  store
+    .addCustomer(name, email, pwd)
+    .then((x) =>
+      res
+        .status(200)
+        .json({ done: true, message: "Customer added successfully" })
+    )
+    .catch((e) => {
+      console.log(e);
+      res.status(500).json({
+        done: false,
+        message: "Customer was not added due to an error.",
+      });
+    });
+  /*
   if (customers.length === 0) {
     customers.push(newEntry);
     res
@@ -92,11 +127,28 @@ app.post("/register", (req, res) => {
       .json({ done: true, message: "User successfully added!" })
       .end();
   }
+  */
 });
 
 app.post("/login", (req, res) => {
   var email = req.body.email;
   var pwd = req.body.password;
+  store
+    .login(email, password)
+    .then((x) => {
+      if (x.valid) {
+        res
+          .status(200)
+          .json({ done: true, message: "Customer logged in successfully." });
+      } else {
+        res.status(401).json({ done: false, message: x.message });
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+      res.status(500).json({ done: false, message: "Something went wrong." });
+    });
+  /*
   if (customers.length === 0) {
     res
       .status(403)
@@ -119,6 +171,7 @@ app.post("/login", (req, res) => {
       .json({ done: false, message: "Invalid login credentials" })
       .end();
   }
+  */
 });
 
 app.post("/score", (req, res) => {
